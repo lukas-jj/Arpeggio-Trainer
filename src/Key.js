@@ -11,14 +11,19 @@ const modes = {
   'locrian': [0, 1, 3, 5, 6, 8, 10, 12],
 };
 
-const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const noteNames = {'c':60, 'c#':61, 'd':62, 'd#':63, 'e':64, 'f':65, 'f#':66, 'g':67, 'g#':68, 'a':69, 'a#':70, 'b':71}
 
-const rootNote = 60; // middle C
+
 
 const ArpeggioPlayer = () => {
   const [mode, setMode] = useState('ionian');
   const [isPlaying, setIsPlaying] = useState(false);
   const [noteName, setNoteName] = useState('');
+  const [rootNote, setRootNote] = useState(60)
+
+const handleRootNote = (e) => (
+  setNoteName(e)
+);
 
   useEffect(() => {    
     if (!isPlaying) return;
@@ -32,11 +37,10 @@ const ArpeggioPlayer = () => {
     let oscillator = null;
    
     const play = () => {     
+
       const note = rootNote + scale[current];
       const noteName = noteNames[note % 12];    
-
-      setNoteName(noteName);
-
+ 
       oscillator = context.createOscillator();
       oscillator.frequency.value = 440 * Math.pow(2, (note - 69) / 12);
       oscillator.connect(context.destination);
@@ -64,6 +68,13 @@ const ArpeggioPlayer = () => {
           <option key={m} value={m}>{m}</option>
         ))}
       </select>
+
+      <select value={noteNames[rootNote]} onChange={e => setRootNote(noteNames[e.target.value])}>
+  {Object.keys(noteNames).map(note => (
+    <option key={note} value={note}>{note}</option>
+  ))}
+</select>
+
       <button onClick={() => setIsPlaying(!isPlaying)}>
         {isPlaying ? 'Stop' : 'Start'}
       </button>
