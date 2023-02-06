@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Guitar from 'react-guitar'
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 const modes = {
@@ -21,25 +22,24 @@ const ArpeggioPlayer = () => {
   const [noteName, setNoteName] = useState('');
   const [rootNote, setRootNote] = useState(60)
 
-const handleRootNote = (e) => (
-  setNoteName(e)
-);
+  const keyNames = Object.keys(modes).map(m => (
+    <option key={m} value={m}>{m}</option>
+  ))
+
+
+
 
   useEffect(() => {    
     if (!isPlaying) return;
 
     const context = new AudioContext()
-    
-    
+  
     const scale = modes[mode];
     
     let current = 0;
     let oscillator = null;
-   
     const play = () => {     
-
       const note = rootNote + scale[current];
-      const noteName = noteNames[note % 12];    
  
       oscillator = context.createOscillator();
       oscillator.frequency.value = 440 * Math.pow(2, (note - 69) / 12);
@@ -49,7 +49,10 @@ const handleRootNote = (e) => (
       
       current++;
       
-      if(current < scale.length) oscillator.addEventListener('ended', play);
+console.log(current)
+
+      if(current < scale.length) 
+        oscillator.addEventListener('ended', play)
     };
     
     play();
@@ -64,21 +67,19 @@ const handleRootNote = (e) => (
   return (
     <div>
       <select value={mode} onChange={e => setMode(e.target.value)}>
-        {Object.keys(modes).map(m => (
-          <option key={m} value={m}>{m}</option>
-        ))}
+        {keyNames}
       </select>
 
       <select value={noteNames[rootNote]} onChange={e => setRootNote(noteNames[e.target.value])}>
-  {Object.keys(noteNames).map(note => (
-    <option key={note} value={note}>{note}</option>
-  ))}
-</select>
-
+        {Object.keys(noteNames).map(note => (
+          <option key={note} value={note}>{note}</option>
+        ))}
+      </select>
       <button onClick={() => setIsPlaying(!isPlaying)}>
         {isPlaying ? 'Stop' : 'Start'}
       </button>
-     <h1>{noteName}</h1>
+      <Guitar strings={[0, 1, 2, 2, 0, -1]} />,
+      <h1>{noteName}</h1>
     </div>
   );
 };
