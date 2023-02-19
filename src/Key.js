@@ -15,57 +15,69 @@ const modes = {
 };
 
 const noteNames = {
+  'A': {
+    midi: 57,
+    fretPosition: [-1, -1, -1, -1, 0, -1]
+    },
+  'A#': {
+    midi: 58,
+    fretPosition: [-1, -1, -1, -1, 1, -1]
+    },
+  'B': {
+    midi: 59,
+    fretPosition: [-1, -1, -1, -1, 2, -1]
+    },
   'C': {
   midi: 60,
-  fretPosition: [-1, 3, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 3, -1]
   },
   'C#': {
   midi: 61,
-  fretPosition: [-1, 4, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 4, -1]
   },
   'D': {
   midi: 62,
-  fretPosition: [-1, 5, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 5, -1]
   },
   'D#': {
   midi: 63,
-  fretPosition: [-1, 6, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 6, -1]
   },
   'E': {
   midi: 64,
-  fretPosition: [-1, 7, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 7, -1]
   },
   'F': {
   midi: 65,
-  fretPosition: [-1, 8, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 8, -1]
   },
   'F#': {
   midi: 66,
-  fretPosition: [-1, 9, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 9, -1]
   },
   'G': {
   midi: 67,
-  fretPosition: [-1, 10, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 10, -1]
   },
   'G#': {
   midi: 68,
-  fretPosition: [-1, 11, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 11, -1]
   },
-  'A': {
+  'A2': {
   midi: 69,
-  fretPosition: [-1, 12, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 12, -1]
   },
-  'A#': {
+  'A#2': {
   midi: 70,
-  fretPosition: [-1, 13, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 13, -1]
   },
-  'B': {
+  'B2': {
   midi: 71,
-  fretPosition: [-1, 14, -1, -1, -1, -1]
+  fretPosition: [-1, -1, -1, -1, 14, -1]
   },
   'C2': {
     midi: 72,
-    fretPosition: [-1, 15, -1, -1, -1, -1]
+    fretPosition: [-1, -1, -1, -1, 15, -1]
     }
   };
 
@@ -74,8 +86,8 @@ const ArpeggioPlayer = () => {
   const [mode, setMode] = useState('ionian');
   const [isPlaying, setIsPlaying] = useState(false);
   const [noteName, setNoteName] = useState('');
-  const [rootNote, setRootNote] = useState(60)
-  const [fretPosition, setFretPosition] = useState([-1, 3, -1, -1, -1, -1])
+  const [rootNote, setRootNote] = useState(57)
+  const [fretPosition, setFretPosition] = useState([-1, -1, -1, -1, -1, -1])
   const strings = useMemo(() => [0, 1, 2, 2, 0, -1], [])
   const { play, strum } = useSound({ fretting: strings, tuning: standard })
 
@@ -93,10 +105,8 @@ const ArpeggioPlayer = () => {
     let oscillator = null;
     const play = () => {     
       const note = rootNote + scale[current];
-
-      console.log(rootNote, current, note)
+      console.log(noteNames[Object.keys(noteNames).find(key => noteNames[key].midi === note)].fretPosition)
       setFretPosition(noteNames[Object.keys(noteNames).find(key => noteNames[key].midi === note)].fretPosition)
-
       setNoteName(Object.keys(noteNames).find(key => noteNames[key].midi === note))    
       oscillator = context.createOscillator();
       oscillator.frequency.value = 440 * Math.pow(2, (note - 69) / 12);
@@ -125,9 +135,9 @@ const ArpeggioPlayer = () => {
         {keyNames}
       </select>
 
-      <select value={noteNames[rootNote]} onChange={e => setRootNote(noteNames[e.target.value])}>
+      <select value={noteNames[rootNote]} onChange={e => setRootNote(noteNames[e.target.value].midi)}>
         {Object.keys(noteNames).map(note => (
-          <option key={note} value={note}>{note}</option>
+          <option key={note} value={note}>Note: {note}</option>
         ))}
       </select>
       <button onClick={() => setIsPlaying(!isPlaying)}>
