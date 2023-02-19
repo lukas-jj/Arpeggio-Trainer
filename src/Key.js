@@ -64,21 +64,9 @@ const noteNames = {
   fretPosition: [-1, -1, -1, -1, 11, -1]
   },
   'A2': {
-  midi: 69,
-  fretPosition: [-1, -1, -1, -1, 12, -1]
-  },
-  'A#2': {
-  midi: 70,
-  fretPosition: [-1, -1, -1, -1, 13, -1]
-  },
-  'B2': {
-  midi: 71,
-  fretPosition: [-1, -1, -1, -1, 14, -1]
-  },
-  'C2': {
-    midi: 72,
-    fretPosition: [-1, -1, -1, -1, 15, -1]
-    }
+    midi: 69,
+    fretPosition: [-1, -1, -1, -1, 12, -1]
+    },
   };
 
 
@@ -103,11 +91,16 @@ const ArpeggioPlayer = () => {
     
     let current = 0;
     let oscillator = null;
-    const play = () => {     
-      const note = rootNote + scale[current];
-      console.log(noteNames[Object.keys(noteNames).find(key => noteNames[key].midi === note)].fretPosition)
+    const play = () => {    
+    let note = rootNote + scale[current];
+
+      if (note > 69) {
+        note = note - 12;
+      }
+
       setFretPosition(noteNames[Object.keys(noteNames).find(key => noteNames[key].midi === note)].fretPosition)
       setNoteName(Object.keys(noteNames).find(key => noteNames[key].midi === note))    
+
       oscillator = context.createOscillator();
       oscillator.frequency.value = 440 * Math.pow(2, (note - 69) / 12);
       oscillator.connect(context.destination);
