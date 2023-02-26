@@ -12,7 +12,8 @@ code {
     monospace;
 }
 
-#Guitar{
-  
+.Guitar{
+width:100vh;
+width:fit-content;
 }
 

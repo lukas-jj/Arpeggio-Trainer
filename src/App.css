@@ -28,8 +28,8 @@
   color: #61dafb;
 }
 
-#Guitar{
-  width: 50vw;
+.Guitar{
+  height: 100px;
 }
 
 @keyframes App-logo-spin {
