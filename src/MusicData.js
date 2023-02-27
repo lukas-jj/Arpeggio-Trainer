@@ -2,7 +2,9 @@
 // Fretboard setup
 export const emptyFretboard = [-1, -1, -1, -1, -1, -1]
 
-export const fretBoardLength = 12;
+export const fretBoardLength = 22;
+
+export const totalFrets = Array.from(Array(fretBoardLength).keys());
 
 // Notes
 export const noteNamesA = {
@@ -97,14 +99,6 @@ export const noteNamesA = {
   'G2': {
     midi: 79,
     fretPosition: [-1, -1, -1, -1, 22, -1]
-  },
-  'G#2': {
-    midi: 80,
-    fretPosition: [-1, -1, -1, -1, 23, -1]
-  },
-  'A3': {
-    midi: 81,
-    fretPosition: [-1, -1, -1, -1, 24, -1]
   }
 };
 

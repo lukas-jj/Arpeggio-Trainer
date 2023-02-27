@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import Guitar from "react-guitar";
 import { standard } from "react-guitar-tunings";
 import useSound from "react-guitar-sound";
-import { modes, noteNamesA, noteNamesB, emptyFretboard, fretBoardLength } from "./MusicData.js";
+import { modes, noteNamesA, noteNamesB, emptyFretboard, fretBoardLength, totalFrets } from "./musicData.js";
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
-console.log(modes);
+console.log(totalFrets);
 
 const ArpeggioPlayer = () => {
   const [mode, setMode] = useState("ionian");
@@ -19,19 +19,18 @@ const ArpeggioPlayer = () => {
   const { string, setString } = useState('A')
 
 
-
   const keyNames = Object.keys(modes).map((m) => (
     <option key={m} value={m}>
       {m}
     </option>
   ));
+  
 
   function getMidiValueByFretPosition(num) {
     // iterate through the noteNames object
     for (let note in noteNamesA) {
       // if the note's fretPosition is equal to the number passed in, return the midi value
       if (noteNamesA[note].fretPosition[4] === + num) return noteNamesA[note].midi;
-
     }
     // if no match is found, return null
     return null;
@@ -52,7 +51,6 @@ const ArpeggioPlayer = () => {
         console.log(topMidi)
         note = note - 12;
       }
-
       setFretPosition(
         noteNamesA[
           Object.keys(noteNamesA).find((key) => noteNamesA[key].midi === note)
@@ -87,22 +85,13 @@ const ArpeggioPlayer = () => {
     <div>
       <label for="fretboard-amount">Fretboard Amount:</label>
       <select id="fretboard-amount" onChange={(e) => setFretboardAmount(e.target.value)} >
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
+        {totalFrets.map((fret) => ((fret > 12) ? <option value={fret}>{fret}</option> : null))}
       </select>
+      
+
       <select value={mode} onChange={(e) => setMode(e.target.value)}>
         {keyNames}
       </select>
-      f
       <select
         value={noteNamesA[rootNote]}
         onChange={(e) => setRootNote(noteNamesA[e.target.value].midi)}
