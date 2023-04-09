@@ -1,6 +1,7 @@
 {
-  "name": "lukas",
+  "name": "lukasg",
   "version": "0.1.0",
+  "homepage": "https://lukas-jj.github.io/guitar-app/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -8,12 +9,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.6",
     "dotenv": "^16.0.3",
-    "nodemon": "^2.0.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-guitar": "^1.1.2",
-    "react-guitar-sound": "^1.1.2",
-    "react-guitar-tunings": "^1.1.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -21,7 +18,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -40,5 +39,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }

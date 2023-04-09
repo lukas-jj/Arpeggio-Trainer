@@ -15,9 +15,10 @@ const ArpeggioPlayer = () => {
   const [fretPosition, setFretPosition] = useState(emptyFretboard);
   const strings = useMemo(() => emptyFretboard, []);
   const [fretboardAmount, setFretboardAmount] = useState(fretBoardLength);
-  const { play, strum } = useSound({ fretting: strings, tuning: standard });
-  const { string, setString } = useState('A')
-
+  const { play, strum } = useSound({
+    fretting: strings,
+    tuning: standard,
+  })
 
   const keyNames = Object.keys(modes).map((m) => (
     <option key={m} value={m}>
@@ -70,7 +71,7 @@ const ArpeggioPlayer = () => {
 
       if (current < scale.length) oscillator.addEventListener("ended", play);
     };
-
+    // Guitar.onPlay(noteName, fretPosition, fretboardAmount, play)
     play();
 
     return () => {
@@ -80,6 +81,8 @@ const ArpeggioPlayer = () => {
     };
   }, [mode, isPlaying]);
 
+  
+
   return (
 
     <div>
@@ -87,8 +90,6 @@ const ArpeggioPlayer = () => {
       <select id="fretboard-amount" onChange={(e) => setFretboardAmount(e.target.value)} >
         {totalFrets.map((fret) => ((fret > 12) ? <option value={fret}>{fret}</option> : null))}
       </select>
-      
-
       <select value={mode} onChange={(e) => setMode(e.target.value)}>
         {keyNames}
       </select>
@@ -106,7 +107,9 @@ const ArpeggioPlayer = () => {
         {isPlaying ? "Stop" : "Start"}
       </button>
       <Guitar className="Guitar" strings={fretPosition} onPlay={play} />
-      <h1>{noteName}</h1>
+      <h1>{}</h1>
+
+      <h2>Fret: {noteName}</h2>
     </div>
   );
 };
