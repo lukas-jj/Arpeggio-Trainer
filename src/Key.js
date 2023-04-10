@@ -7,6 +7,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 console.log(totalFrets);
 
+
 const ArpeggioPlayer = () => {
   const [mode, setMode] = useState("ionian");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,6 +32,7 @@ const ArpeggioPlayer = () => {
     // iterate through the noteNames object
     for (let note in noteNamesA) {
       // if the note's fretPosition is equal to the number passed in, return the midi value
+      // needs to refactor to use string number
       if (noteNamesA[note].fretPosition[4] === + num) return noteNamesA[note].midi;
     }
     // if no match is found, return null
@@ -49,14 +51,12 @@ const ArpeggioPlayer = () => {
       let topMidi = getMidiValueByFretPosition(fretboardAmount);
       console.log(topMidi, note, "topMidi, note")
       if (note > topMidi) {
-        console.log(topMidi)
         note = note - 12;
       }
-      setFretPosition(
-        noteNamesA[
-          Object.keys(noteNamesA).find((key) => noteNamesA[key].midi === note)
-        ].fretPosition
-      );
+
+      setFretPosition(fretPosition.map((fret, i) => (i === 4 ? note - rootNote : fret)));
+
+
       setNoteName(
         Object.keys(noteNamesA).find((key) => noteNamesA[key].midi === note)
       );
@@ -109,7 +109,8 @@ const ArpeggioPlayer = () => {
       <Guitar className="Guitar" strings={fretPosition} onPlay={play} />
       <h1>{}</h1>
 
-      <h2>Fret: {noteName}</h2>
+      <h2>Note: {noteName}</h2>
+     <h2>String: {fretPosition[4]}</h2>
     </div>
   );
 };
