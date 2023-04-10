@@ -56,47 +56,47 @@ export const noteNamesA = {
     midi: 68,
     fretPosition: [-1, -1, -1, -1, 11, -1]
   },
-  'A2': {
+  'A(octave)': {
     midi: 69,
     fretPosition: [-1, -1, -1, -1, 12, -1]
   },
-  'A#2': {
+  'A#(octave)': {
     midi: 70,
     fretPosition: [-1, -1, -1, -1, 13, -1]
   },
-  'B2': {
+  'B(octave)': {
     midi: 71,
     fretPosition: [-1, -1, -1, -1, 14, -1]
   },
-  'C2': {
+  'C(octave)': {
     midi: 72,
     fretPosition: [-1, -1, -1, -1, 15, -1]
   },
-  'C#2': {
+  'C#(octave)': {
     midi: 73,
     fretPosition: [-1, -1, -1, -1, 16, -1]
   },
-  'D2': {
+  'D(octave)': {
     midi: 74,
     fretPosition: [-1, -1, -1, -1, 17, -1]
   },
-  'D#2': {
+  'D#(octave)': {
     midi: 75,
     fretPosition: [-1, -1, -1, -1, 18, -1]
   },
-  'E2': {
+  'E(octave)': {
     midi: 76,
     fretPosition: [-1, -1, -1, -1, 19, -1]
   },
-  'F2': {
+  'F(octave)': {
     midi: 77,
     fretPosition: [-1, -1, -1, -1, 20, -1]
   },
-  'F#2': {
+  'F#(octave)': {
     midi: 78,
     fretPosition: [-1, -1, -1, -1, 21, -1]
   },
-  'G2': {
+  'G(octave)': {
     midi: 79,
     fretPosition: [-1, -1, -1, -1, 22, -1]
   }
@@ -151,47 +151,47 @@ const noteNamesB = {
     midi: 68,
     fretPosition: [-1, -1, -1, -1, 11, -1]
   },
-  'A2': {
+  'A(octave)': {
     midi: 69,
     fretPosition: [-1, -1, -1, -1, 12, -1]
   },
-  'B2': {
+  'B(octave)': {
 midi: 70,
 fretPosition: [-1, -1, -1, -1, 13, -1]
   },
-  'C2': {
+  'C(octave)': {
 midi: 71,
 fretPosition: [-1, -1, -1, -1, 14, -1]
   },
-  'C#2': {
+  'C#(octave)': {
 midi: 72,
 fretPosition: [-1, -1, -1, -1, 15, -1]
   },
-  'D2': {
+  'D(octave)': {
 midi: 73,
 fretPosition: [-1, -1, -1, -1, 16, -1]
   },
-  'D#2': {
+  'D#(octave)': {
 midi: 74,
 fretPosition: [-1, -1, -1, -1, 17, -1]
   },
-  'E2': {
+  'E(octave)': {
 midi: 75,
 fretPosition: [-1, -1, -1, -1, 18, -1]
   },
-  'F2': {
+  'F(octave)': {
 midi: 76,
 fretPosition: [-1, -1, -1, -1, 19, -1]
   },
-  'F#2': {
+  'F#(octave)': {
 midi: 77,
 fretPosition: [-1, -1, -1, -1, 20, -1]
   },
-  'G2': {
+  'G(octave)': {
 midi: 78,
 fretPosition: [-1, -1, -1, -1, 21, -1]
   },
-  'G#2': {
+  'G#(octave)': {
 midi: 79,
 fretPosition: [-1, -1, -1, -1, 22, -1]
   }

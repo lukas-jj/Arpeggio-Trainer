@@ -14,6 +14,7 @@ const ArpeggioPlayer = () => {
   const [noteName, setNoteName] = useState("");
   const [rootNote, setRootNote] = useState(57);
   const [fretPosition, setFretPosition] = useState(emptyFretboard);
+  const [isLooping, setIsLooping] = useState(false);
   const strings = useMemo(() => emptyFretboard, []);
   const [fretboardAmount, setFretboardAmount] = useState(fretBoardLength);
   const { play, strum } = useSound({
@@ -56,7 +57,6 @@ const ArpeggioPlayer = () => {
 
       setFretPosition(fretPosition.map((fret, i) => (i === 4 ? note - rootNote : fret)));
 
-
       setNoteName(
         Object.keys(noteNamesA).find((key) => noteNamesA[key].midi === note)
       );
@@ -69,7 +69,18 @@ const ArpeggioPlayer = () => {
 
       current++;
 
-      if (current < scale.length) oscillator.addEventListener("ended", play);
+      if (current < scale.length) {
+        oscillator.addEventListener("ended", play);
+      } else {
+        // If there are no more notes in the scale and looping is enabled, reset the 'current' counter and play again
+        if (isLooping) {
+          current = 0;
+          oscillator.addEventListener("ended", play);
+        } else {
+          // If looping is not enabled, set isPlaying to false
+          setIsPlaying(false);
+        }
+      }
     };
     // Guitar.onPlay(noteName, fretPosition, fretboardAmount, play)
     play();
@@ -79,6 +90,7 @@ const ArpeggioPlayer = () => {
       oscillator = null;
       context.close();
     };
+    
   }, [mode, isPlaying]);
 
   
@@ -90,6 +102,9 @@ const ArpeggioPlayer = () => {
       <select id="fretboard-amount" onChange={(e) => setFretboardAmount(e.target.value)} >
         {totalFrets.map((fret) => ((fret > 12) ? <option value={fret}>{fret}</option> : null))}
       </select>
+      <button onClick={() => setIsLooping(!isLooping)}>
+  {isLooping ? "Disable Loop" : "Enable Loop"}
+</button>
       <select value={mode} onChange={(e) => setMode(e.target.value)}>
         {keyNames}
       </select>
@@ -107,10 +122,10 @@ const ArpeggioPlayer = () => {
         {isPlaying ? "Stop" : "Start"}
       </button>
       <Guitar className="Guitar" strings={fretPosition} onPlay={play} />
-      <h1>{}</h1>
-
       <h2>Note: {noteName}</h2>
-     <h2>String: {fretPosition[4]}</h2>
+      <h2>String: A</h2>
+      <h2>Fret: {fretPosition[4]}</h2>
+
     </div>
   );
 };
