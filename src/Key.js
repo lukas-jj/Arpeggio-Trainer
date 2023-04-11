@@ -5,9 +5,6 @@ import useSound from "react-guitar-sound";
 import { modes, noteNamesA, noteNamesB, emptyFretboard, fretBoardLength, totalFrets } from "./musicData.js";
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
-console.log(totalFrets);
-
-
 const ArpeggioPlayer = () => {
   const [mode, setMode] = useState("ionian");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -27,7 +24,7 @@ const ArpeggioPlayer = () => {
       {m}
     </option>
   ));
-  
+
 
   function getMidiValueByFretPosition(num) {
     // iterate through the noteNames object
@@ -47,10 +44,12 @@ const ArpeggioPlayer = () => {
 
     let current = 0;
     let oscillator = null;
+
     const play = () => {
+
       let note = rootNote + scale[current];
       let topMidi = getMidiValueByFretPosition(fretboardAmount);
-      console.log(topMidi, note, "topMidi, note")
+
       if (note > topMidi) {
         note = note - 12;
       }
@@ -66,21 +65,23 @@ const ArpeggioPlayer = () => {
       oscillator.connect(context.destination);
       oscillator.start();
       oscillator.stop(context.currentTime + 0.5);
-
       current++;
 
-if (current < scale.length) {
-  oscillator.addEventListener("ended", play);
-} else {
-  // Play the octave note before stopping
-  if (isLooping) {
-    current = 0;
-    oscillator.addEventListener("ended", play);
-  } else {
-    setIsPlaying(false);
-  }
-}    };
-    // Guitar.onPlay(noteName, fretPosition, fretboardAmount, play)
+      if (current < scale.length) {
+        oscillator.addEventListener("ended", play);
+      }
+
+      else if (current == scale.length) {
+        if (isLooping) {
+          current = 0;
+          oscillator.addEventListener("ended", play);
+        } else {
+          oscillator.start();
+          oscillator.stop(context.currentTime + 0.5);
+          setIsPlaying(false);
+        }
+      }
+    };
     play();
 
     return () => {
@@ -113,13 +114,13 @@ if (current < scale.length) {
       <button onClick={() => setIsPlaying(!isPlaying)}>
         {isPlaying ? "Stop" : "Start"}
       </button><button onClick={() => setIsLooping(!isLooping)}>
-  {isLooping ? "Disable Loop" : "Enable Loop"}
-</button>
+        {isLooping ? "Disable Loop" : "Enable Loop"}
+      </button>
 
       <Guitar className="Guitar" strings={fretPosition} onPlay={play} />
-      <h1>{}</h1>
+      <h1>{ }</h1>
       <h2>Note: {noteName}</h2>
-     <h2>String: {fretPosition[4]}</h2>
+      <h2>String: {fretPosition[4]}</h2>
     </div>
   );
 };
