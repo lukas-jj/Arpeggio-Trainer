@@ -120,7 +120,9 @@ const ArpeggioPlayer = () => {
       <Guitar className="Guitar" strings={fretPosition} onPlay={play} />
       <h1>{ }</h1>
       <h2>Note: {noteName}</h2>
-      <h2>String: {fretPosition[4]}</h2>
+      {
+        <h2>String: {fretPosition[4] == -1? '' : fretPosition[4]}</h2>
+        }
     </div>
   );
 };
