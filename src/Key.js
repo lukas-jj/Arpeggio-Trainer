@@ -3,7 +3,13 @@ import Guitar from "react-guitar";
 import { standard } from "react-guitar-tunings";
 import useSound from "react-guitar-sound";
 import { modes, noteNamesA, noteNamesB, emptyFretboard, fretBoardLength, totalFrets } from "./musicData.js";
+
+import { getRenderFingerSpn } from "react-guitar";
+
+
 const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+
 
 const ArpeggioPlayer = () => {
   const [mode, setMode] = useState("ionian");
@@ -46,9 +52,9 @@ const ArpeggioPlayer = () => {
     let oscillator = null;
 
     const play = () => {
-
       let note = rootNote + scale[current];
       let topMidi = getMidiValueByFretPosition(fretboardAmount);
+
 
       if (note > topMidi) {
         note = note - 12;
@@ -64,21 +70,22 @@ const ArpeggioPlayer = () => {
       oscillator.frequency.value = 440 * Math.pow(2, (note - 69) / 12);
       oscillator.connect(context.destination);
       oscillator.start();
-      oscillator.stop(context.currentTime + 0.5);
+      oscillator.stop(context.currentTime + 1);
       current++;
 
       if (current < scale.length) {
         oscillator.addEventListener("ended", play);
       }
 
-      else if (current == scale.length) {
+      else if (current === scale.length) {
         if (isLooping) {
           current = 0;
           oscillator.addEventListener("ended", play);
         } else {
           oscillator.start();
-          oscillator.stop(context.currentTime + 0.5);
-          setIsPlaying(false);
+          oscillator.stop(context.currentTime + 1);          
+            setIsPlaying(false);
+
         }
       }
     };
@@ -117,8 +124,8 @@ const ArpeggioPlayer = () => {
         {isLooping ? "Disable Loop" : "Enable Loop"}
       </button>
 
-      <Guitar className="Guitar" strings={fretPosition} onPlay={play} />
-      <h1>{ }</h1>
+      <Guitar renderFinger={getRenderFingerSpn(standard)} center="true" className="Guitar" playOnHover strings={fretPosition} onPlay={play} />
+      <h1>{ }</h1> 
       <h2>Note: {noteName}</h2>
       {
         <h2>String: {fretPosition[4] == -1? '' : fretPosition[4]}</h2>
